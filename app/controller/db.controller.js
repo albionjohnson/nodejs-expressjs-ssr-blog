@@ -24,22 +24,25 @@ exports.create = (req, res) => {
     });
     return;
   }
+  let file = null;
+  let filePath = null;
+  let fileOriginalName = null;
+  if (req.file) {
+    file = req.file;
+    filePath = req.file.path;
+    fileOriginalName = req.file.originalname;
+  }
+
   Blog.create({
     title: req.body.title,
     snippet: req.body.snippet,
     body: req.body.body,
-    thumbnail: req.file,
-    thumbnailUrl: req.file.path,
-    thumbnailName: req.file.originalname,
+    thumbnail: file,
+    thumbnailUrl: filePath,
+    thumbnailName: fileOriginalName,
   })
     .then((response) => {
-
-      // console.log("Response: ", response);
-      console.log("Response: ", req.file.encoding);
-      console.log("Response: ", req.file.mimetype);
-
       res.redirect("/");
-      //   res.send({ message: "Created Successfully" });
     })
     .catch((error) => {
       res.send({ error: "There some error while creating", error });
@@ -56,14 +59,10 @@ exports.findOne = (req, res, next) => {
   console.log("Find One: ", req.url);
   Blog.findOne({ where: { id: req.params.id } })
     .then((blog) => {
-      console.log("Image: ", blog.thumbnail.toString('base64'));
-      console.log("Thumbnail: ", blog)
-
       res.status(200).render("details", {
         title: blog.title,
         blog,
         createdAt: format(new Date(blog.createdAt), "PPp"),
-        img: blog.thumbnail.toString('base64'),
       });
     })
     .catch((error) => {

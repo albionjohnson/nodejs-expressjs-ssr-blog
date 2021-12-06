@@ -4,7 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/public/favicon.svg" type="image/x-icon">
     <meta name="theme-color" content="#f15273">
-    <title><%= title %> </title>
-    <meta property="og:image" content="<%= blog.thumbnailUrl %>" />
-    <link rel="stylesheet" href="/public/css/styles.css">
+    <title>
+        <%= title %>
+    </title>
+    <% if (blog.thumbnailUrl) { %>
+        <meta property="og:image" content="<%= blog.thumbnailUrl %>" />
+        <% } %>
+            <link rel="stylesheet" href="/public/css/styles.css">
 </head>
