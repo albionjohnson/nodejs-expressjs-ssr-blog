@@ -1,7 +1,6 @@
 const db = require("../config/index");
 const { format } = require("date-fns");
 const Blog = db.blog;
-const fs = require('fs');
 
 
 exports.aboutPage = (req, res) => {
