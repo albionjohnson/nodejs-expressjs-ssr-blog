@@ -6,7 +6,12 @@
     <body>
         <div>
             <%- include('../components/navbar.ejs') %>
-
+                <div id="thumb">
+                    <div>
+                        <img id="thumbnail" src="<%= blog.thumbnailUrl %>" alt="<%= blog.thumbnailName %>">
+                    </div>
+                    <div class="abstract-image"></div>
+                </div>
                 <div class="blog-detail">
                     <a href="/delete/<%= blog.id %>">
                         <button>Delete</button>
@@ -20,11 +25,10 @@
                     <p class="body">
                         <%= blog.body %>
                     </p>
-                </div>
 
+                </div>
         </div>
         <%- include('../components/footer.ejs') %>
-
     </body>
 
 </html>

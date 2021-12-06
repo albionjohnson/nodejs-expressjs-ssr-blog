@@ -6,3 +6,11 @@ module.exports = {
   dialect: 'postgres',
   ssl: true,
 };
+// module.exports = {
+//   database: 'postgres',
+//   username: 'postgres',
+//   password: 'Lamq0270',
+//   host: 'localhost',
+//   dialect: 'postgres',
+//   ssl: true,
+// };

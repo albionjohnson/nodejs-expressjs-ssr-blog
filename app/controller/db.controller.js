@@ -1,6 +1,8 @@
 const db = require("../config/index");
 const { format } = require("date-fns");
 const Blog = db.blog;
+const fs = require('fs');
+
 
 exports.aboutPage = (req, res) => {
   console.log("GET", req.url);
@@ -14,6 +16,7 @@ exports.createPage = (req, res) => {
 
 exports.create = (req, res) => {
   console.log("Inside create function");
+  console.log('Upload: ', req.body);
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -25,8 +28,16 @@ exports.create = (req, res) => {
     title: req.body.title,
     snippet: req.body.snippet,
     body: req.body.body,
+    thumbnail: req.file,
+    thumbnailUrl: req.file.path,
+    thumbnailName: req.file.originalname,
   })
     .then((response) => {
+
+      // console.log("Response: ", response);
+      console.log("Response: ", req.file.encoding);
+      console.log("Response: ", req.file.mimetype);
+
       res.redirect("/");
       //   res.send({ message: "Created Successfully" });
     })
@@ -45,11 +56,14 @@ exports.findOne = (req, res, next) => {
   console.log("Find One: ", req.url);
   Blog.findOne({ where: { id: req.params.id } })
     .then((blog) => {
+      console.log("Image: ", blog.thumbnail.toString('base64'));
+      console.log("Thumbnail: ", blog)
+
       res.status(200).render("details", {
         title: blog.title,
         blog,
         createdAt: format(new Date(blog.createdAt), "PPp"),
-        snippet: blog.snippet
+        img: blog.thumbnail.toString('base64'),
       });
     })
     .catch((error) => {
@@ -71,3 +85,17 @@ exports.deleteOne = (req, res) => {
       res.send({ error: "Error while deleting ", err });
     });
 };
+
+
+exports.findThumbnail = (req, res) => {
+  console.log(req.params.id);
+  Blog.findOne({
+    where: {id: req.params.id }
+  })
+  .then(response => {
+    res.send({ message: response.thumbnail })
+  })
+  .catch(error => {
+    res.send({ message: "Error on getting thumbnail, ", error})
+  })
+}
