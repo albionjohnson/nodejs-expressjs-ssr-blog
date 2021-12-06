@@ -37,7 +37,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   Blog.findAll({ order: [["createdAt", "DESC"]] }).then((blogs) => {
-    res.status(200).render("home", { title: "Home", blogs, format });
+    res.status(200).render("home", { title: "Primer Blog", blogs, format });
   });
 };
 
