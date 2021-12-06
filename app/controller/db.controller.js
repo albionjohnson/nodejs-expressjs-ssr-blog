@@ -49,6 +49,7 @@ exports.findOne = (req, res, next) => {
         title: blog.title,
         blog,
         createdAt: format(new Date(blog.createdAt), "PPp"),
+        snippet: blog.snippet
       });
     })
     .catch((error) => {
