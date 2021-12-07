@@ -84,7 +84,6 @@ app.use((req, res) => {
     .render("404", { title: "404 | Not Found", msg: "404 Not Found" });
 });
 
-
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {

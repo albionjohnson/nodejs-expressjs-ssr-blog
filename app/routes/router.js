@@ -10,7 +10,8 @@ module.exports = (app) => {
     // request routing
     router.post('/blogs', upload.single('image') , blogs.create);
     router.get('/delete/:id', blogs.deleteOne);
-    router.get('/:id', blogs.findOne);
+    router.get('/page/:page', blogs.pagination);
+    router.get('/post/:id', blogs.findOne);
     router.get('/thumbnail/:id', blogs.findThumbnail);
 
     app.use(router);

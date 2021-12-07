@@ -218,6 +218,54 @@ footer p {
   top: 0;
 }
 
+#pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 20px auto;
+}
+#pagination #pages {
+  margin: 10px 4px;
+  background-color: #f15272b9;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  border-radius: 4px;
+  cursor: pointer !important;
+  text-decoration: none;
+  transition: all 0.24s;
+}
+#pagination #pages:hover {
+  background-color: #f13157;
+}
+#pagination #page {
+  text-align: center;
+  padding: 8px;
+  color: white;
+  font-size: 21px;
+}
+#pagination .active-page {
+  text-align: center;
+  margin: 6px;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+}
+#pagination .active-pages {
+  margin: 10px 5px;
+  background-color: #ee2e55;
+  width: 40px;
+  position: relative;
+  height: 40px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.24s;
+  cursor: text;
+}
+
 @media (max-width: 500px) {
   .four-four {
     max-width: 300px;
@@ -237,6 +285,10 @@ footer p {
 
   .blog-detail {
     max-width: 330px;
+  }
+
+  #pagination {
+    max-width: 300px;
   }
 }
 /*# sourceMappingURL=styles.css.map */

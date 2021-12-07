@@ -2,7 +2,6 @@ const db = require("../config/index");
 const { format } = require("date-fns");
 const Blog = db.blog;
 
-
 exports.aboutPage = (req, res) => {
   console.log("GET", req.url);
   res.status(200).render("about", { title: "About" });
@@ -14,8 +13,6 @@ exports.createPage = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  console.log("Inside create function");
-  console.log('Upload: ', req.body);
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -49,8 +46,18 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Blog.findAll({ order: [["createdAt", "DESC"]] }).then((blogs) => {
-    res.status(200).render("home", { title: "Primer Blog", blogs, format });
+  let blogs = null;
+  let pages = null;
+  Blog.findAndCountAll({
+    order: [["createdAt", "DESC"]],
+    offset: 0,
+    limit: 4,
+  }).then((count) => {
+    blogs = count.rows;
+    pages = Math.ceil(count.count / 4);
+    res
+      .status(200)
+      .render("home", { title: "Primer Blog", blogs, format, pages, currentPage: 0 });
   });
 };
 
@@ -58,6 +65,7 @@ exports.findOne = (req, res, next) => {
   console.log("Find One: ", req.url);
   Blog.findOne({ where: { id: req.params.id } })
     .then((blog) => {
+      // console.log(blog.thumbnailUrl)
       res.status(200).render("details", {
         title: blog.title,
         blog,
@@ -70,7 +78,7 @@ exports.findOne = (req, res, next) => {
 };
 
 exports.deleteOne = (req, res) => {
-    console.log('Delete Req ', req.params.id)
+  console.log("Delete Req ", req.params.id);
   Blog.destroy({
     where: {
       id: req.params.id,
@@ -84,16 +92,37 @@ exports.deleteOne = (req, res) => {
     });
 };
 
-
 exports.findThumbnail = (req, res) => {
   console.log(req.params.id);
   Blog.findOne({
-    where: {id: req.params.id }
+    where: { id: req.params.id },
   })
-  .then(response => {
-    res.send({ message: response.thumbnail })
-  })
-  .catch(error => {
-    res.send({ message: "Error on getting thumbnail, ", error})
-  })
-}
+    .then((response) => {
+      res.send({ message: response.thumbnail });
+    })
+    .catch((error) => {
+      res.send({ message: "Error on getting thumbnail, ", error });
+    });
+};
+
+exports.pagination = (req, res) => {
+  if (req.params.page == 0) {
+    res.redirect("/");
+  } else {
+    let page = req.params.page;
+    let offset = page * 4;
+    let blogs = null;
+    let pages = null;
+    Blog.findAndCountAll({
+      order: [["createdAt", "DESC"]],
+      offset: offset,
+      limit: 4,
+    }).then((count) => {
+      blogs = count.rows;
+      pages = Math.ceil(count.count / 4);
+      res
+        .status(200)
+        .render("home", { title: "Primer Blog", blogs, format, pages, currentPage: req.params.page });
+    });
+  }
+};

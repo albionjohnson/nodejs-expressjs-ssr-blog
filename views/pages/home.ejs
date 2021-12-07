@@ -1,39 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="/public/favicon.svg" type="image/x-icon">
-        <meta name="theme-color" content="#f15273">
-        <title><%= title %> </title>
-        <meta property="og:description" content="Primer Blog home page. All the blog posts can be found here. ">
-        <meta property="og:image" content="https://cdn.pixabay.com/photo/2019/09/17/18/48/computer-4484282_640.jpg" />
-        <link rel="stylesheet" href="/public/css/styles.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/public/favicon.svg" type="image/x-icon">
+    <meta name="theme-color" content="#f15273">
+    <title>
+        <%= title %>
+    </title>
+    <meta property="og:description" content="Primer Blog home page. All the blog posts can be found here. ">
+    <meta property="og:image" content="https://cdn.pixabay.com/photo/2019/09/17/18/48/computer-4484282_640.jpg" />
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
 
-    <body>
-        <div>
-            <%- include('../components/navbar.ejs') %>
-
-                <% blogs.map(blog=> { %>
-                    <div class="blog">
-                        <a href="<%=blog.id%>">
-                            <p class="title">
-                                <%= blog.title %>
-                            </p>
-
-                        </a>
-                        <p class="createdAt"><%= format(new Date(blog.createdAt), "PPp")  %> </p>
-                        <!-- in tuts i will show this later, after details time formating, I will tell, i can format data from js file but how can i do inside ejs file? well its pretty easy. then show the technique -->
-                        <p class="snippet">
-                            <%=  blog.snippet.slice(0, 150) %>...
+<body>
+    <div>
+        <%- include('../components/navbar.ejs') %>
+            <% blogs.map(blog=> { %>
+                <div class="blog">
+                    <a href="/post/<%=blog.id%>">
+                        <p class="title">
+                            <%= blog.title %>
                         </p>
+
+                    </a>
+                    <p class="createdAt">
+                        <%= format(new Date(blog.createdAt), "PPp" ) %>
+                    </p>
+                    <!-- in tuts i will show this later, after details time formating, I will tell, i can format data from js file but how can i do inside ejs file? well its pretty easy. then show the technique -->
+                    <p class="snippet">
+                        <%= blog.snippet.slice(0, 150) %>...
+                    </p>
+                </div>
+                <% }) %>
+                    <div id="pagination">
+                        <% for (let i=0; i < pages; i++) { %>
+                            <% if (currentPage==i) { %>
+                                <div class="active-pages">
+                                    <p class="active-page">
+                                        <%= i %>
+                                    </p>
+                                </div>
+
+                                <% } else { %>
+
+                                    <a id="pages" href="/page/<%=i%>">
+                                        <div id="page">
+                                            <%= i %>
+                                        </div>
+                                    </a>
+                                    <% } %>
+
+                                        <% } %>
                     </div>
-                    <% }) %>
-        </div>
-        <%- include('../components/footer.ejs') %>
-    </body>
+    </div>
+    <%- include('../components/footer.ejs') %>
+</body>
 
 </html>
