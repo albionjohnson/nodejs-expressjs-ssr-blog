@@ -21,9 +21,17 @@
                     <a style="margin-left: 10px;" href="/delete/<%= blog.id %>">
                         <button>Delete</button>
                     </a>
-                    <p class="createdAt">
-                        <%= createdAt %>
-                    </p>
+                    <% if (createdAt == updatedAt) { %>
+                        <p class="createdAt">
+                            <%= createdAt %>
+                        </p>
+
+                    <% } else { %>
+                        <p class="createdAt">
+                           Updated: <%= updatedAt %>
+                        </p>
+                        <% } %>
+
                     <p class="blog-title">
                         <%= blog.title %>
                     </p>
