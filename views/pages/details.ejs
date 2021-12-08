@@ -15,7 +15,10 @@
                 </div>
             <% } %>
                 <div class="blog-detail">
-                    <a href="/delete/<%= blog.id %>">
+                    <a  href="/post/getpost/<%= blog.id %>">
+                        <button>Edit</button>
+                    </a>
+                    <a style="margin-left: 10px;" href="/delete/<%= blog.id %>">
                         <button>Delete</button>
                     </a>
                     <p class="createdAt">

@@ -28,21 +28,44 @@ exports.create = (req, res) => {
     filePath = req.file.path;
     fileOriginalName = req.file.originalname;
   }
-
-  Blog.create({
-    title: req.body.title,
-    snippet: req.body.snippet,
-    body: req.body.body,
-    thumbnail: file,
-    thumbnailUrl: filePath,
-    thumbnailName: fileOriginalName,
-  })
-    .then((response) => {
-      res.redirect("/");
+  if (req.url.includes("update")) {
+    Blog.update(
+      {
+        title: req.body.title,
+        snippet: req.body.snippet,
+        body: req.body.body,
+        thumbnail: file,
+        thumbnailUrl: filePath,
+        thumbnailName: fileOriginalName,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    )
+      .then((response) => {
+        res.redirect("/");
+      })
+      .catch((error) => {
+        res.send({ error: "There some error while creating", error });
+      });
+  } else {
+    Blog.create({
+      title: req.body.title,
+      snippet: req.body.snippet,
+      body: req.body.body,
+      thumbnail: file,
+      thumbnailUrl: filePath,
+      thumbnailName: fileOriginalName,
     })
-    .catch((error) => {
-      res.send({ error: "There some error while creating", error });
-    });
+      .then((response) => {
+        res.redirect("/");
+      })
+      .catch((error) => {
+        res.send({ error: "There some error while creating", error });
+      });
+  }
 };
 
 exports.findAll = (req, res) => {
@@ -55,26 +78,46 @@ exports.findAll = (req, res) => {
   }).then((count) => {
     blogs = count.rows;
     pages = Math.ceil(count.count / 4);
-    res
-      .status(200)
-      .render("home", { title: "Primer Blog", blogs, format, pages, currentPage: 0 });
+    res.status(200).render("home", {
+      title: "Primer Blog",
+      blogs,
+      format,
+      pages,
+      currentPage: 0,
+    });
   });
 };
 
 exports.findOne = (req, res, next) => {
   console.log("Find One: ", req.url);
-  Blog.findOne({ where: { id: req.params.id } })
-    .then((blog) => {
-      // console.log(blog.thumbnailUrl)
-      res.status(200).render("details", {
-        title: blog.title,
-        blog,
-        createdAt: format(new Date(blog.createdAt), "PPp"),
+  if (req.url.includes("getpost")) {
+    Blog.findOne({ where: { id: req.params.id } })
+      .then((blog) => {
+        // console.log(blog.thumbnailUrl)
+        res.status(200).render("update", {
+          title: blog.title,
+          blog,
+          createdAt: format(new Date(blog.createdAt), "PPp"),
+          updatedAt: format(new Date(blog.updatedAt), "PPp"),
+        });
+      })
+      .catch((error) => {
+        next();
       });
-    })
-    .catch((error) => {
-      next();
-    });
+  } else {
+    Blog.findOne({ where: { id: req.params.id } })
+      .then((blog) => {
+        res.status(200).render("details", {
+          title: blog.title,
+          blog,
+          createdAt: format(new Date(blog.createdAt), "PPp"),
+          updatedAt: format(new Date(blog.updatedAt), "PPp"),
+        });
+      })
+      .catch((error) => {
+        next();
+      });
+  }
 };
 
 exports.deleteOne = (req, res) => {
@@ -120,9 +163,13 @@ exports.pagination = (req, res) => {
     }).then((count) => {
       blogs = count.rows;
       pages = Math.ceil(count.count / 4);
-      res
-        .status(200)
-        .render("home", { title: "Primer Blog", blogs, format, pages, currentPage: req.params.page });
+      res.status(200).render("home", {
+        title: "Primer Blog",
+        blogs,
+        format,
+        pages,
+        currentPage: req.params.page,
+      });
     });
   }
 };

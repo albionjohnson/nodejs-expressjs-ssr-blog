@@ -8,8 +8,7 @@
         <link rel="shortcut icon" href="/public/favicon.svg" type="image/x-icon">
         <meta name="theme-color" content="#f15273">
         <title><%= title %> </title>
-        <meta property="og:description" content="Primer Blog create page. From here, blog post can be created. ">
-        <meta property="og:image" content="https://cdn.pixabay.com/photo/2019/09/17/18/48/computer-4484282_640.jpg" />
+        <meta property="og:description" content="Primer Blog update page. From here, blog post can be created. ">
         <link rel="stylesheet" href="/public/css/styles.css">
     </head>
 
@@ -17,7 +16,8 @@
         <div>
             <%- include('../components/navbar.ejs') %>
                 <div>
-                    <form action="/blogs" method="POST" enctype="multipart/form-data">
+                    <form action="/post/update" method="POST" enctype="multipart/form-data">
+                        <input type="text" id="id" name="id" hidden>
                         <label for="title">Title: </label>
                         <input type="text" id="title" name="title" required>
                         <label for="snippet">Snippet: </label>
@@ -26,11 +26,21 @@
                         <textarea name="body" id="body" cols="30" rows="10" required></textarea>
                         <label for="image">Thumbnail:</label>
                         <input type="file" name="image" id="image" accept="image/*">
+
                         <button>Post</button>
                     </form>
                 </div>
         </div>
         <%- include('../components/footer.ejs') %>
+        <% let post = blog; %>
+        <script>
+            document.getElementById('title').value = <%- JSON.stringify(blog.title) %>;
+            document.getElementById('snippet').value = <%- JSON.stringify(blog.snippet) %>;
+            document.getElementById('body').value = <%- JSON.stringify(blog.body) %>;
+            document.getElementById('id').value = <%- JSON.stringify(blog.id) %>;
+
+        </script>
+
     </body>
 
 </html>

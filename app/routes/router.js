@@ -12,6 +12,8 @@ module.exports = (app) => {
     router.get('/delete/:id', blogs.deleteOne);
     router.get('/page/:page', blogs.pagination);
     router.get('/post/:id', blogs.findOne);
+    router.get('/post/getpost/:id', blogs.findOne);
+    router.post('/post/update', upload.single('image'), blogs.create);
     router.get('/thumbnail/:id', blogs.findThumbnail);
 
     app.use(router);
