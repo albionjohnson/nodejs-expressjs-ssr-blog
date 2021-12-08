@@ -45,7 +45,7 @@ exports.create = (req, res) => {
       }
     )
       .then((response) => {
-        res.redirect("/");
+        res.redirect(`/post/${req.body.id}`);
       })
       .catch((error) => {
         res.send({ error: "There some error while creating", error });
