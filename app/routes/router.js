@@ -9,6 +9,7 @@ module.exports = (app) => {
     router.get('/create', blogs.createPage);
     // request routing
     router.post('/blogs', upload.single('image') , blogs.create);
+    router.post('/blogs/adminpost', blogs.frontPost);
     router.get('/delete/:id', blogs.deleteOne);
     router.get('/page/:page', blogs.pagination);
     router.get('/post/:id', blogs.findOne);

@@ -202,6 +202,10 @@ button:hover {
   .body {
     color: $primary-color;
     line-height: 1.4;
+    img {
+      max-width: 500px;
+      object-fit: contain;
+    }
   }
 }
 
@@ -305,5 +309,11 @@ footer {
   }
   #pagination {
     max-width: 300px;
+  }
+  .body {
+    img {
+      max-width: 280px !important;
+      object-fit: contain;
+    }
   }
 }

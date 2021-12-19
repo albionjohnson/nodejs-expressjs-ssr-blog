@@ -12,6 +12,34 @@ exports.createPage = (req, res) => {
   res.status(200).render("create", { title: "Create" });
 };
 
+exports.frontPost = (req, res) => {
+  console.log("adminpost");
+  let file = null;
+  let filePath = null;
+  let fileOriginalName = null;
+  if (req.file) {
+    file = req.file;
+    filePath = req.file.path;
+    fileOriginalName = req.file.originalname;
+  }
+  Blog.create({
+    title: req.body.title,
+    snippet: req.body.snippet,
+    body: req.body.body,
+    thumbnail: file,
+    thumbnailUrl: filePath,
+    thumbnailName: fileOriginalName,
+  })
+    .then((response) => {
+      res
+        .status(200)
+        .send({ response: "Posted successfully, ", response });
+    })
+    .catch((error) => {
+      res.send({ error: "There some error while creating", error });
+    });
+};
+
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
