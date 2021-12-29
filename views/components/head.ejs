@@ -9,7 +9,7 @@
     </title>
     <% if (blog) { %>
         <% if (blog.thumbnail) { %>
-            <meta property="og:image" content="\<%= blog.thumbnail %>" />
+            <meta property="og:image" content="data:image/png;base64, <%= coverImg %>" />
             <% } %>
                 <% } %>
                     <link rel="stylesheet" href="/public/css/styles.css">
