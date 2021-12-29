@@ -9,12 +9,12 @@ const sequelize = new Sequelize({
   host: config.host,
   dialect: config.dialect,
   port: 5432,
-  // dialectOptions: {
-  //   ssl: {
-  //     require: true,
-  //     rejectUnauthorized: false,
-  //   },
-  // },
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 });
 
 // testing connection
