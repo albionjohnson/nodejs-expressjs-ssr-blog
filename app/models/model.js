@@ -14,14 +14,10 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     thumbnail: {
-      type: DataTypes.BLOB('long'),
+      type: DataTypes.BLOB(),
       allowNull: true,
     },
     thumbnailName: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    thumbnailUrl: {
       type: DataTypes.STRING,
       allowNull: true,
     }

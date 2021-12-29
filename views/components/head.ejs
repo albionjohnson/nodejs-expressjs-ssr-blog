@@ -8,8 +8,8 @@
         <%= title %>
     </title>
     <% if (blog) { %>
-        <% if (blog.thumbnailUrl) { %>
-            <meta property="og:image" content="\<%= blog.thumbnailUrl %>" />
+        <% if (blog.thumbnail) { %>
+            <meta property="og:image" content="\<%= blog.thumbnail %>" />
             <% } %>
                 <% } %>
                     <link rel="stylesheet" href="/public/css/styles.css">

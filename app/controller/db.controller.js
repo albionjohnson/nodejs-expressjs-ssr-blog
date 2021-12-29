@@ -12,50 +12,25 @@ exports.createPage = (req, res) => {
   res.status(200).render("create", { title: "Create" });
 };
 
-exports.frontPost = (req, res) => {
-  console.log("adminpost");
-  let file = null;
-  let filePath = null;
-  let fileOriginalName = null;
-  if (req.file) {
-    file = req.file;
-    filePath = req.file.path;
-    fileOriginalName = req.file.originalname;
-  }
-  Blog.create({
-    title: req.body.title,
-    snippet: req.body.snippet,
-    body: req.body.body,
-    thumbnail: file,
-    thumbnailUrl: filePath,
-    thumbnailName: fileOriginalName,
-  })
-    .then((response) => {
-      res
-        .status(200)
-        .send({ response: "Posted successfully, ", response });
-    })
-    .catch((error) => {
-      res.send({ error: "There some error while creating", error });
-    });
-};
-
 exports.create = (req, res) => {
   // Validate request
+  console.log(req.body);
   if (!req.body.title) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
     return;
   }
+  const { data, name } = req.files.image;
+
   let file = null;
   let filePath = null;
   let fileOriginalName = null;
-  if (req.file) {
-    file = req.file;
-    filePath = req.file.path;
-    fileOriginalName = req.file.originalname;
+  if (data) {
+    file = data;
+    fileOriginalName = name;
   }
+
   if (req.url.includes("update")) {
     Blog.update(
       {
@@ -63,7 +38,6 @@ exports.create = (req, res) => {
         snippet: req.body.snippet,
         body: req.body.body,
         thumbnail: file,
-        thumbnailUrl: filePath,
         thumbnailName: fileOriginalName,
       },
       {
@@ -84,7 +58,6 @@ exports.create = (req, res) => {
       snippet: req.body.snippet,
       body: req.body.body,
       thumbnail: file,
-      thumbnailUrl: filePath,
       thumbnailName: fileOriginalName,
     })
       .then((response) => {
@@ -121,10 +94,10 @@ exports.findOne = (req, res, next) => {
   if (req.url.includes("getpost")) {
     Blog.findOne({ where: { id: req.params.id } })
       .then((blog) => {
-        // console.log(blog.thumbnailUrl)
         res.status(200).render("update", {
           title: blog.title,
           blog,
+          coverImg: Buffer.from(blog.thumbnail).toString("base64"),
           createdAt: format(new Date(blog.createdAt), "PPp"),
           updatedAt: format(new Date(blog.updatedAt), "PPp"),
         });
@@ -138,6 +111,7 @@ exports.findOne = (req, res, next) => {
         res.status(200).render("details", {
           title: blog.title,
           blog,
+          coverImg: Buffer.from(blog.thumbnail).toString("base64"),
           createdAt: format(new Date(blog.createdAt), "PPp"),
           updatedAt: format(new Date(blog.updatedAt), "PPp"),
         });

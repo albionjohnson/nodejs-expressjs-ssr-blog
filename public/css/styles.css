@@ -184,13 +184,9 @@ button:hover {
   color: #4b5563;
   line-height: 1.4;
 }
-.blog-detail .body img {
-  max-width: 500px;
-  object-fit: contain;
-}
 
 footer {
-  margin-top: 100px;
+  margin-top: 150px;
 }
 footer p {
   text-align: center;
@@ -293,11 +289,6 @@ footer p {
 
   #pagination {
     max-width: 300px;
-  }
-
-  .body img {
-    max-width: 280px !important;
-    object-fit: contain;
   }
 }
 /*# sourceMappingURL=styles.css.map */

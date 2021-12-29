@@ -6,33 +6,39 @@
     <body>
         <div>
             <%- include('../components/navbar.ejs') %>
-            <% if (blog.thumbnailUrl) { %>
-                <div id="thumb">
-                    <div>
-                        <img id="thumbnail" src="\<%= blog.thumbnailUrl %>" alt="<%= blog.thumbnailName %>">
+                <% if (blog.thumbnail) { %>
+                    <div id="thumb">
+                        <div>
+                            <img id="thumbnail" src="data:image/png;base64, <%= coverImg %>" alt="<%= blog.thumbnailName %> ">
+                        </div>
+                        <div class="abstract-image"></div>
                     </div>
-                    <div class="abstract-image"></div>
-                </div>
-            <% } %>
-                <div class="blog-detail">
-                    <% if (createdAt == updatedAt) { %>
-                        <p class="createdAt">
-                            <%= createdAt %>
-                        </p>
+                    <% } %>
+                        <div class="blog-detail">
+                            <a href="/post/getpost/<%= blog.id %>">
+                                <button>Edit</button>
+                            </a>
+                            <a style="margin-left: 10px;" href="/delete/<%= blog.id %>">
+                                <button>Delete</button>
+                            </a>
+                            <% if (createdAt==updatedAt) { %>
+                                <p class="createdAt">
+                                    <%= createdAt %>
+                                </p>
 
-                    <% } else { %>
-                        <p class="createdAt">
-                           Updated: <%= updatedAt %>
-                        </p>
-                        <% } %>
+                                <% } else { %>
+                                    <p class="createdAt">
+                                        Updated: <%= updatedAt %>
+                                    </p>
+                                    <% } %>
 
-                    <p class="blog-title">
-                        <%= blog.title %>
-                    </p>
-                    <div class="body">
-                        <%- blog.body %>
-                    </div>
-                </div>
+                                        <p class="blog-title">
+                                            <%= blog.title %>
+                                        </p>
+                                        <p class="body">
+                                            <%= blog.body %>
+                                        </p>
+                        </div>
         </div>
         <%- include('../components/footer.ejs') %>
     </body>
