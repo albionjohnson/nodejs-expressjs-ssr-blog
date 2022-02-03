@@ -76,17 +76,21 @@ exports.findAll = (req, res) => {
     order: [["createdAt", "DESC"]],
     offset: 0,
     limit: 4,
-  }).then((count) => {
-    blogs = count.rows;
-    pages = Math.ceil(count.count / 4);
-    res.status(200).render("home", {
-      title: "Primer Blog",
-      blogs,
-      format,
-      pages,
-      currentPage: 0,
+  })
+    .then((count) => {
+      blogs = count.rows;
+      pages = Math.ceil(count.count / 4);
+      res.status(200).render("home", {
+        title: "Primer Blog",
+        blogs,
+        format,
+        pages,
+        currentPage: 0,
+      });
+    })
+    .catch((error) => {
+      res.send({ error: "There some error while creating", error });
     });
-  });
 };
 
 exports.findOne = (req, res, next) => {
@@ -162,16 +166,20 @@ exports.pagination = (req, res) => {
       order: [["createdAt", "DESC"]],
       offset: offset,
       limit: 4,
-    }).then((count) => {
-      blogs = count.rows;
-      pages = Math.ceil(count.count / 4);
-      res.status(200).render("home", {
-        title: "Primer Blog",
-        blogs,
-        format,
-        pages,
-        currentPage: req.params.page,
+    })
+      .then((count) => {
+        blogs = count.rows;
+        pages = Math.ceil(count.count / 4);
+        res.status(200).render("home", {
+          title: "Primer Blog",
+          blogs,
+          format,
+          pages,
+          currentPage: req.params.page,
+        });
+      })
+      .catch((error) => {
+        res.send({ error: "There some error while creating", error });
       });
-    });
   }
 };
