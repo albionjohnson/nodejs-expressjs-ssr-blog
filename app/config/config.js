@@ -1,9 +1,9 @@
 module.exports = {
-  database: 'dcv0qc4egr42eh',
-  username: 'pfajdqnlcougli',
-  password: '6d0bd5daf653c77fb7265115050768a3b6956f926ed4fa8ba8ccde5dc877726d',
-  host: 'ec2-44-193-188-118.compute-1.amazonaws.com',
-  dialect: 'postgres',
+  database: "d34ohje4601b8u",
+  username: "bukprcqtrxjvpt",
+  password: "b7b544478f53da84d7d0372f39de4a21064ccea337ca74cdfaa87cb1460c9cd4",
+  host: "ec2-44-206-197-71.compute-1.amazonaws.com",
+  dialect: "postgres",
   ssl: true,
 };
 // module.exports = {
